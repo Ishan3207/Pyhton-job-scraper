@@ -13,8 +13,7 @@ def get_user_inputs():
     print("--- Internship Scraper 3000 ---")
     job_role = input("Enter the internship role (e.g., Python Developer): ")
     location = input("Enter the location (e.g., Remote, New York, India): ")
-    
-    # NEW: Ask for the number of jobs
+
     while True:
         try:
             num_jobs = int(input("How many jobs do you want to extract? (e.g., 20): "))
@@ -47,8 +46,6 @@ def scrape_linkedin(job_role, location, num_jobs):
     driver.get(base_url)
     time.sleep(3)
     
-    # NEW: Calculate how many times to scroll based on the number of jobs you want
-    # LinkedIn loads about 25 jobs per 'scroll'. We add a buffer to be safe.
     scrolls_needed = math.ceil(num_jobs / 20) + 2
     
     print(f"Scrolling {scrolls_needed} times to load enough jobs...")
@@ -66,7 +63,6 @@ def scrape_linkedin(job_role, location, num_jobs):
     results = []
     
     for card in job_cards:
-        # NEW: Stop the loop immediately if we have enough jobs
         if len(results) >= num_jobs:
             break
             
@@ -121,7 +117,6 @@ def save_data(data):
     print("Saved to internships.csv!")
 
 if __name__ == "__main__":
-    # NEW: We now unpack 3 variables instead of 2
     role, loc, count = get_user_inputs()
     scraped_data = scrape_linkedin(role, loc, count)
     save_data(scraped_data)
